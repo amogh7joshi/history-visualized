@@ -4,7 +4,6 @@
 
 Visualizations of historical data in the fields of history, anthropology, theology, and geography.
 
-
 ## Research
 
 Each directory within this repository is home to a specific research submodule, within which
@@ -28,13 +27,20 @@ Research and visualizations of historical and geographic data surrounding the cu
 Research and visualizations of historical macroeconomic data, such as nation GDP and GWP, as well as share of 
 the world market by each country over time. 
 
-
 ## Sources
 
-Data is either scraped and parsed directly from Wikipedia (see [query](https://github.com/amogh7joshi/history-visualized/README.md##Research)
-for in-depth information on how the information is gathered), or through verified external sources (e.g., the Maddison Project for historical 
+Data is either scraped and parsed directly from Wikipedia (in-depth information on how the information is gathered will be added in the near future), 
+or through verified external sources (e.g., the Maddison Project for historical 
 world and nation GDP data). The visualizations are generated in the individual research submodules using matplotlib and numpy from this data, 
 and may not be used without permission.
+
+## License and Usage
+
+All the code in this repository, including the top-level `query` and `graphics` modules as well as the individual research submodule files, are
+licensed under the Apache-2.0 License. You are free to download the code and try out the visualization generation methods for yourself (it's 
+actually quite an intuitive process once you understand it!). 
+
+Any of the generated visualizations can be used (non-commercially), but the watermark must be retained and this repository cited with it.
 
 
 
