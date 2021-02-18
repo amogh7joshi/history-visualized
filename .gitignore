@@ -1,0 +1,16 @@
+venv/
+.idea/
+__pycache__/
+.DS_Store
+
+# Binary data files and storage directories.
+*.pickle
+**/data/
+nations/flag_image_storage/
+
+
+# Secrets.
+finance/secrets.json
+
+# Temporary.
+nations/data.py
