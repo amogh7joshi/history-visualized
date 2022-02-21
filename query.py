@@ -19,6 +19,7 @@ Utility methods for search queries through the Wikipedia API.
 A top-level module, since it is used by all individual research
 directories as an API-searching and information processing resource.
 """
+
 import os
 import sys
 import re
@@ -38,6 +39,7 @@ from bs4 import BeautifulSoup
 # Country Processing Modules.
 import pycountry as pc
 
+
 # Top-Level Resource Lists: Updated in the validation methods below.
 _SUPPORTED_LIST_QUERIES = []
 _REPLACEMENT_QUERIES = []
@@ -45,10 +47,12 @@ _ALLOWED_SPACED_QUERIES = []
 _NATION_DICT = {}
 _VALIDATED_CACHE = {}
 
+
 # Additional Constants.
 BASE_WIKI_URL = "https://en.wikipedia.org/wiki/"
 BASE_WIKI_API_URL = "https://en.wikipedia.org/w/api.php"
 BASE_WIKI_REQUEST_URL = 'http://en.wikipedia.org/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles='
+
 
 # GENERATION METHODS:
 # Internal methods to construct the above resource lists and dictionaries.
@@ -88,6 +92,7 @@ def _generate_nation_dict():
    _NATION_DICT[indx + 1] = ['East Timor']
    _NATION_DICT[indx + 2] = ['Timor-Leste']
 
+
 def _generate_replacement_queries():
    """Generates the _REPLACEMENT_QUERIES list."""
    global _REPLACEMENT_QUERIES
@@ -96,6 +101,7 @@ def _generate_replacement_queries():
    _REPLACEMENT_QUERIES.append(['nation', 'country', 'countries', 'nations', 'sovereign states'])
    _REPLACEMENT_QUERIES.append(['president', 'presidents', 'prime minister', 'prime ministers'])
 
+
 def _generate_allowed_spaced_queries():
    """Generates the _ALLOWED_SPACED_QUERIES list."""
    global _ALLOWED_SPACED_QUERIES
@@ -103,6 +109,7 @@ def _generate_allowed_spaced_queries():
    # Add items to the list.
    _ALLOWED_SPACED_QUERIES.extend(['prime minister', 'prime ministers'])
    _ALLOWED_SPACED_QUERIES.extend(['united states'])
+
 
 def _generate_resources():
    """Generates the resource lists before anything gets imported."""
@@ -113,15 +120,19 @@ def _generate_resources():
    # Generate list of queries allowed to have spaces.
    _generate_allowed_spaced_queries()
 
+
 # OS METHODS:
 # These methods allow for path manipulation and processing.
+
 
 def get_base_path_name(file):
    """Get the base filename, without the directory tree and file extension."""
    return os.path.splitext(os.path.basename(file))[0]
 
+
 # TOP-LEVEL QUERY VALIDATION METHODS:
 # These methods are basic query validation methods, to determine whether a query is appropriate.
+
 
 def is_valid_country(term):
    """Determines if an input nation is a valid nation."""
@@ -145,8 +156,10 @@ def is_valid_country(term):
    _VALIDATED_CACHE[term] = False
    return _VALIDATED_CACHE[term]
 
+
 # WIKIPEDIA API INTERACTION METHODS:
 # These methods conduct the actual searching of the Wikipedia API.
+
 
 def _merge_query_results(*terms, output_thresh = 20):
    """Converts provided query terms into a list of outputs."""
@@ -170,6 +183,7 @@ def _merge_query_results(*terms, output_thresh = 20):
 
    # Return results.
    return output_values
+
 
 def search_multiple_words(*words, output_thresh = 20):
    """Gets the output result of multiple words and returns values which contain each input term."""
@@ -201,6 +215,7 @@ def search_multiple_words(*words, output_thresh = 20):
 
    # Return final outputs.
    return final_output
+
 
 def _parse_query_for_conditions(*terms, **kwargs):
    """Certain queries have allotted replacements which need to all be tried."""
@@ -260,6 +275,7 @@ def _parse_query_for_conditions(*terms, **kwargs):
    # If nothing has been returned, then return the original method.
    return list_of_search_results(*terms, bypass = False)
 
+
 def list_of_search_results(*terms, bypass = True, **kwargs):
    """Returns a list of search result items from a specific query, such as 'list of nations'."""
    # The bypass argument should only be changed by this function itself.
@@ -304,6 +320,7 @@ def list_of_search_results(*terms, bypass = True, **kwargs):
 
    # Return the list of query terms (filtered for uniqueness).
    return list(set(output_list))
+
 
 def process_page(*search_terms, specific_query = None, processing_function = None):
    """Returns the result of a search, such as 'list of countries', from a given processing function.
@@ -350,6 +367,7 @@ def process_page(*search_terms, specific_query = None, processing_function = Non
    # Apply processing function to the data.
    return processing_function(_valid_list)
 
+
 def _pretty_parse(item):
    """Prettifies an inputted string containing Wikipedia page content."""
    if not isinstance(item, str):
@@ -371,6 +389,7 @@ def _pretty_parse(item):
    item = re.sub('\n', ', ', item)
 
    return item
+
 
 def parse_page_information(term):
    """Returns the page information from a parsed term."""
@@ -406,9 +425,11 @@ def parse_page_information(term):
    # Parse and prettify the content before returning.
    return _pretty_parse(complete_information)
 
+
 # INFORMATION RETENTION METHODS AND CLASSES:
 # These methods and classes allow for information retention, e.g. saving already parsed
 # information into a binary file in order for easy and efficient storage and re-usage.
+
 
 class InformationLoader(object, metaclass = abc.ABCMeta):
    """Abstract base class which facilitates the easy storage and reuse of parsed Wikipedia
@@ -500,6 +521,7 @@ class InformationLoader(object, metaclass = abc.ABCMeta):
    def process_function(self, *args, **kwargs):
       """The primary method which processes the provided information. Needs to be implemented."""
       raise NotImplementedError("The process_function method needs to be overwritten for usage.")
+
 
 if __name__ == '__main__':
    # If running this file directly, then user is debugging.

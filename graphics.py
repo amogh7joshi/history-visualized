@@ -19,15 +19,18 @@ Utility methods for graphics processing.
 A top-level module, since it is used by all individual research
 directories for processing images and other related graphics.
 """
+
 import os
 import logging
 
 import cairo
 import cairosvg
 
+
 # GRAPHICS CONVERSION METHODS:
 # Methods for converting graphic filetypes, notable instances include
 # svg to (png, jpg), since these are not possible through high-level libraries.
+
 
 def svg_to_png(*paths, delete = False):
    """Converts a list of images from svg to png files."""
@@ -62,9 +65,11 @@ def svg_to_png(*paths, delete = False):
    # Return the return list.
    return return_list
 
+
 # PATH MANIPULATION METHODS:
 # Methods for path manipulation that make manipulating paths
 # a lot simpler from their initial methods.
+
 
 def convert_path_extension(path, conversion = '.png'):
    """Converts a path extension to a different one (as provided)."""
