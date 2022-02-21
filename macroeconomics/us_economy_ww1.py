@@ -17,8 +17,8 @@
 A specific implementation of a graph representing the United States
 Imports and Exports before/during/after World War I, as part of a project
 on the influence of WWI on U.S. globalism.
-
 """
+
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -68,7 +68,13 @@ def build_us_import_export_graph(savefig = True):
    plt.legend()
 
    # Display the plot.
+   fig = plt.gcf()
    plt.show()
+
+   # Save the figure.
+   if savefig:
+      fig.savefig('images/us-economy-ww1.png')
+
 
 if __name__ == '__main__':
    # Build the graph.

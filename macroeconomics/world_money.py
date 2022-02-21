@@ -13,24 +13,21 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import os
+
 import re
 
-import datetime
 import wikipedia as wk
 
 # For figure development.
 import numpy as np
-import matplotlib
 from matplotlib import style
 style.use('seaborn-darkgrid')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatch
-from matplotlib.lines import Line2D
 
 # Webpage parsing functions.
 import requests
 from bs4 import BeautifulSoup
+
 
 def get_gwp_data():
    """Gets gross world product (GWP) data and returns a list over time."""
@@ -91,13 +88,16 @@ def get_gwp_data():
    # Return the data.
    return _return_dict
 
+
 # Construct the world's GWP data.
 world_gwp_data = get_gwp_data()
+
 
 def convert_years_to_scale(data):
    """Converts the actual years in B.C./A.D. to a scale usable in a plot."""
    # Get the years.
    return {key: value for key, value in zip(data.keys(), range(len(data.keys())))}
+
 
 def plot_world_gwp_trend(savefig = True):
    """Plots the world GWP over a period of ~10,000 years."""
@@ -119,11 +119,13 @@ def plot_world_gwp_trend(savefig = True):
    plt.title("$\\bf{World\\,\\:GDP\\,\\:Over\\,\\:10,000\\,\\:Years}$")
 
    # Display the plot.
-   savefig = plt.gcf()
+   fig = plt.gcf()
    plt.show()
 
    # Save the figure.
    if savefig:
-      savefig.savefig('images/world-gwp-over-time.png')
+      fig.savefig('images/world-gwp-over-time.png')
 
 
+if __name__ == '__main__':
+    plot_world_gwp_trend()
