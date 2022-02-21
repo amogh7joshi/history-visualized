@@ -391,7 +391,7 @@ def _pretty_parse(item):
    return item
 
 
-def parse_page_information(term):
+def parse_page_information(term, summarize = False):
    """Returns the page information from a parsed term."""
    if not isinstance(term, str):
       raise TypeError("You must provide a pre-parsed string to get the page information, if you are searching "
@@ -410,20 +410,35 @@ def parse_page_information(term):
    soup = BeautifulSoup(page.content, 'html.parser')
 
    # Set up the string containing the complete description.
-   complete_information = ""
+   if summarize:
+      complete_information = ""
 
-   # Get all of the paragraph content in the page.
-   table = soup.find('div', class_ = re.compile('mw-content-ltr'))
-   for item in table.find_all('p'):
-      # Notable instances which need to be skipped.
-      if item.text.strip() in ['Sources:']:
-         continue
+      # Get all of the paragraph content in the page.
+      table = soup.find('div', class_ = re.compile('mw-content-ltr'))
+      for item in table.find_all('p'):
+         # Notable instances which need to be skipped.
+         if item.text.strip() in ['Sources:']:
+            continue
 
-      # Add to list of presidents.
-      complete_information += item.text.strip()
+         # Add to list of presidents.
+         complete_information += item.text.strip()
 
-   # Parse and prettify the content before returning.
-   return _pretty_parse(complete_information)
+      # Parse and prettify the content before returning.
+      return _pretty_parse(complete_information)
+
+   # If no summarization is requested, return the BeautifulSoup object.
+   return soup
+
+
+# STRING PARSING METHODS:
+# These methods are for general string parsing, not specific to a query.
+
+
+def clean_escape_sequences(string):
+   """Removes all escape sequences from an input string."""
+   escapes = ''.join([chr(char) for char in range(1, 32)])
+   translator = str.maketrans('', '', escapes)
+   return string.translate(translator)
 
 
 # INFORMATION RETENTION METHODS AND CLASSES:
